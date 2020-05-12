@@ -31,9 +31,7 @@ We have tried to cover important topics such as:
 - Group similar kind of imports in consecutive lines and separate these groups by a line space.
 - Import only important modules in production level code (e.g., to use generate random values, import `numpy.random` module rather than the complete `numpy` package).
 - All new code should import each module by its full package name.
-  
   eg: Both of the below mentioned piece of codes are correct
-  #### YES ✅
   ```python
   # Reference absl.flags in code with the complete name (verbose).
   import absl.flags
@@ -49,7 +47,7 @@ We have tried to cover important topics such as:
   FLAGS = flags.FLAGS
   ```
 
-  #### NO ⛔️
+  No:
   ```python
   # Unclear what module the author wanted and what will be imported.  The actual
   # import behaviour depends on external factors controlling sys.path.
@@ -184,6 +182,76 @@ return ((x, y, z)
 ```
 
 ### 2.7 Generators
+- A generator function returns an iterator that yields a value each time it executes a yield statement. After it yields a value, the runtime state of the generator function is suspended until the next value is needed.
+- It is suggested to use a generator, as it uses less memory and because of the state preservation for local variables and control flow. `range` is the best example of a generator.
+- The code is simple and uses `yield` instead of `return`. Hence, use “Yields:” rather than “Returns:” in the docstring for generator functions.
+
+### 2.8 Lambda functions
+- Lambdas define anonymous functions in an expression, as opposed to a statement. They are often used to define callbacks or operators for higher-order functions like `map()` and `filter()`.
+- They are good for one liner functions. As a rule of thumb, if the length of lambda function exceeds 60-80 chars, it is better to define a nested function.
+- Lambda functions are harder to read and debug than local functions. The lack of names means the stack traces are more difficult to understand.
+- If lambda function is not very simple and is being repeated again and again its better to have a nested function. This should be applicable for both python modules and notebooks.
+
+### 2.9 Conditional expressions
+- Conditional expressions (sometimes called a “ternary operator”) are mechanisms that provide a shorter syntax for if statements. For example: `x = 1 if cond else 2`.
+- These expressions are okay for simple cases. Each portion must fit on one line:
+  - true-expression
+  - if-expression
+  - else-expression
+- Use a complete if statement when things get more complicated.
+
+#### YES ✅
+```python
+one_line = 'yes' if predicate(value) else 'no'
+slightly_split = ('yes' if predicate(value)
+                  else 'no, nein, nyet')
+the_longest_ternary_style_that_can_be_done = (
+    'yes, true, affirmative, confirmed, correct'
+    if predicate(value)
+    else 'no, false, negative, nay')
+```
+
+#### NO ⛔️
+```python
+bad_line_breaking = ('yes' if predicate(value) else
+                     'no')
+portion_too_long = ('yes'
+                    if some_long_module.some_long_predicate_function(
+                        really_long_variable_name)
+                    else 'no, false, negative, nay')
+```
+
+### 2.10 Default Argument Values
+- Only one precaution need to be taken. Do not use mutable objects as default values in the function or method definition.
+- This should be applicable for both python modules and notebooks.
+
+#### YES ✅
+```python
+def foo(a, b=None):
+         if b is None:
+             b = []
+def foo(a, b: Optional[Sequence] = None):
+         if b is None:
+             b = []
+def foo(a, b: Sequence = ()):  # Empty tuple OK since tuples are immutable
+         ...
+```
+
+#### NO ⛔️
+```python
+def foo(a, b=[]):
+         ...
+def foo(a, b=time.time()):  # The time the module was loaded???
+         ...
+def foo(a, b=FLAGS.my_thing):  # sys.argv has not yet been parsed...
+         ...
+def foo(a, b: Mapping = {}):  # Could still get passed to unchecked code
+         ...
+```
+
+### 2.11 Properties
+- Use properties for accessing or setting data where you would normally have used simple, lightweight accessor or setter methods.
+- A way to wrap method calls for getting and setting an attribute as a standard attribute access when the computation is lightweight.
 
 
 
