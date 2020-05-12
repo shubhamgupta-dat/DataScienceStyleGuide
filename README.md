@@ -31,7 +31,9 @@ We have tried to cover important topics such as:
 - Group similar kind of imports in consecutive lines and separate these groups by a line space.
 - Import only important modules in production level code (e.g., to use generate random values, import `numpy.random` module rather than the complete `numpy` package).
 - All new code should import each module by its full package name.
+  
   eg: Both of the below mentioned piece of codes are correct
+  #### YES ✅
   ```python
   # Reference absl.flags in code with the complete name (verbose).
   import absl.flags
@@ -47,7 +49,7 @@ We have tried to cover important topics such as:
   FLAGS = flags.FLAGS
   ```
 
-  No:
+  #### NO ⛔️
   ```python
   # Unclear what module the author wanted and what will be imported.  The actual
   # import behaviour depends on external factors controlling sys.path.
@@ -193,7 +195,7 @@ return ((x, y, z)
 
 ## Coming Soon, Near You!
 
-Python Style Rules
-Python Usability Best Practices
-Jupyter Notebook Best Practices
-Library Development Best Practices
+- Python Style Rules
+- Python Usability Best Practices
+- Jupyter Notebook Best Practices
+- Library Development Best Practices
