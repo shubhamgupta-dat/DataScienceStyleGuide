@@ -14,10 +14,15 @@ These best practices can be used while working on interactive python notebooks o
  - Vim
 
 We have tried to cover important topics such as:
+
 2. Python Language Rules
+
 3. Python Style Rules
+
 4. Python Usability Best Practices
+
 5. Jupyter Notebook Best Practices  
+
 6. Library Development Best Practices  
 
 ## 2. Python Language Rules:
