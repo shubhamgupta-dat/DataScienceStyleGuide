@@ -252,8 +252,136 @@ def foo(a, b: Mapping = {}):  # Could still get passed to unchecked code
 ### 2.11 Properties
 - Use properties for accessing or setting data where you would normally have used simple, lightweight accessor or setter methods.
 - A way to wrap method calls for getting and setting an attribute as a standard attribute access when the computation is lightweight.
+- Readability is increased by eliminating explicit get and set method calls for simple attribute access. Allows calculations to be lazy. Considered the Pythonic way to maintain the interface of a class.
+- Properties should be created with the `@property` decorator.
+- ⚠️ Word of Caution: If you are using Python 2.x, please inherit class from `object`.
+- ⚠️ Word of Caution: Inheritance with properties can be non-obvious if the property itself is not overridden. Thus one must make sure that accessor methods are called indirectly to ensure methods overridden in subclasses are called by the property
 
+#### YES ✅
+```python
+     import math
 
+     class Square(object):
+         """A square with two properties: a writable area and a read-only perimeter.
+
+         To use:
+         >>> sq = Square(3)
+         >>> sq.area
+         9
+         >>> sq.perimeter
+         12
+         >>> sq.area = 16
+         >>> sq.side
+         4
+         >>> sq.perimeter
+         16
+         """
+
+         def __init__(self, side):
+             self.side = side
+
+         @property
+         def area(self):
+             """Area of the square."""
+             return self._get_area()
+
+         @area.setter
+         def area(self, area):
+             return self._set_area(area)
+
+         def _get_area(self):
+             """Indirect accessor to calculate the 'area' property."""
+             return self.side ** 2
+
+         def _set_area(self, area):
+             """Indirect setter to set the 'area' property."""
+             self.side = math.sqrt(area)
+
+         @property
+         def perimeter(self):
+             return self.side * 4
+```
+
+### 2.12 True/False Evaluations
+- ✅ Use the “implicit” false if possible, e.g., `if foo:` rather than `if foo != []:`
+- Always use `if foo is None`: (or `is not None`) to check for a `None` value-e.g., when testing whether a variable or argument that defaults to None was set to some other value. The other value might be a value that’s false in a boolean context!
+- Never compare a boolean variable to `False` using `==`. Use `if not x:` instead. If you need to distinguish `False` from `None` then chain the expressions, such as `if not x and x is not None:`.
+- For sequences (strings, lists, tuples), use the fact that empty sequences are false, so `if seq:` and `if not seq:` are preferable to `if len(seq):` and `if not len(seq):` respectively.
+- ⚠️ Word of Caution: When handling integers, implicit false may involve more risk than benefit (i.e., accidentally handling `None` as `0`). You may compare a value which is known to be an integer (and is not the result of `len()`) against the integer `0`.
+- ⚠️ Word of Caution: '`0`' (i.e., `0` as string) evaluates to `true`.
+
+#### YES ✅
+```python
+if not users:
+  print('no users')
+
+if foo == 0:
+  self.handle_zero()
+
+if i % 10 == 0:
+  self.handle_multiple_of_ten()
+
+def f(x=None):
+  if x is None:
+    x = []
+```
+
+#### NO ⛔️
+```python
+if len(users) == 0:
+    print('no users')
+
+if foo is not None and not foo:
+    self.handle_zero()
+
+if not i % 10:
+    self.handle_multiple_of_ten()
+
+def f(x=None):
+    x = x or []
+```
+
+### 2.13 Deprecated Language Features 
+- Use string methods instead of the `string` module where possible. 
+- Use function call syntax instead of `apply`. 
+- Use list comprehensions and `for` loops instead of `filter` and `map` when the function argument would have been an inlined lambda anyway. This reduces the complexity.
+- Use `for` loops instead of `reduce`.
+
+#### YES ✅
+```python
+     words = foo.split(':')
+
+     [x[1] for x in my_list if x[2] == 5]
+
+     map(math.sqrt, data)    # Ok. No inlined lambda expression.
+
+     fn(*args, **kwargs)
+```
+
+#### NO ⛔️
+```python
+     words = string.split(foo, ':')
+
+     map(lambda x: x[1], filter(lambda x: x[2] == 5, my_list))
+
+     apply(fn, args, kwargs)
+```
+
+### 2.14 Lexical Scoping
+- Okay to use. Not an exceptional feature.
+- A nested Python function can refer to variables defined in enclosing functions, but can not assign to them. Variable bindings are resolved using lexical scoping, that is, based on the static program text.
+- ⚠️ Word of Caution: Scope of Variables should be used with caution. This has lead to a known bug: PEP-0227.
+
+```python
+def get_adder(summand1):
+    """Returns a function that adds numbers to a given number."""
+    def adder(summand2):
+        return summand1 + summand2
+
+    return adder
+```
+
+### 2.15 Function and Method Decorators
 
 
 
