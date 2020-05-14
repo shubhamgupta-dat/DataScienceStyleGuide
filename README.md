@@ -2,6 +2,11 @@
 
 > _With great power there must also come great responsibility!_
 
+<p align="center">
+<image src='https://imgs.xkcd.com/comics/code_quality_2_2x.png' alt="Image Source; xkcd" style="float: center;" width="500"/>
+</p>
+<p align='center'>Anatomy of a Code</p>
+
 ## 1. Background
 
 Python is the primary language being used, by Data Science India Team, to develop and deploy solutions. This style guide is a list of _DOs_ and _DON'Ts_ for the team's developer. This can be referred by internal and other teams and suggestions are welcome. This style guide is inspired by the Google's style guide for python. Author(s) have added more information and modified few important points to accommodate specific use-cases for development in all kinds of environment.
