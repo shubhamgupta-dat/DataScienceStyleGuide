@@ -9,7 +9,7 @@
 
 ## 1. Background
 
-Python is the primary language being used, by Data Science India Team, to develop and deploy solutions. This style guide is a list of _DOs_ and _DON'Ts_ for the team's developer. This can be referred by internal and other teams and suggestions are welcome. This style guide is inspired by the Google's style guide for python. Author(s) have added more information and modified few important points to accommodate specific use-cases for development in all kinds of environment.
+Python is the primary language being used, by Data Science Teams, to develop and deploy solutions. It is important for various developers to remain on the same page. This style guide is a list of _DOs_ and _DON'Ts_ for the team's developer. This can be referred by internal and other teams and suggestions are welcome. This style guide is inspired by the Google's style guide for python. Author(s) have added more information and modified few important points to accommodate specific use-cases for development in all kinds of environment.
 
 These best practices can be used while working on interactive python notebooks or while writing production level code on any IDE.
 
@@ -422,8 +422,9 @@ def func(a: int) -> List[int]:
 ```python
 a = SomeFunc()  # type: SomeType
 ```
+- [PEP-484](https://www.python.org/dev/peps/pep-0484/) documentation provides more details on the same.
 - Though Type Annotations improve the readability and maintainability of the code, you will have to keep the type declarations up to date. You might see type errors that you think are valid code.
-- It is strongly advised to enable Python type analysis, (PEP-484)[https://www.python.org/dev/peps/pep-0484/], when updating the code. Tools like mypy and pytype can help.
+- It is strongly advised to enable Python type analysis while updating the code. Tools like mypy and pytype can help.
 - Try to keep checks for important return functions. This will encourage the use of SOLID Design Principle.
 
 
