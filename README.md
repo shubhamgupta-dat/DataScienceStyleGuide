@@ -392,6 +392,39 @@ def get_adder(summand1):
 ```
 
 ### 2.15 Function and Method Decorators
+- A function returning another function, usually applied as a function transformation using the `@wrapper` syntax. Common examples for decorators are `classmethod()`, `staticmethod()` and `property`.
+- Elegantly specifies some transformation on a method; the transformation might eliminate some repetitive code. These wrappers can be used in multiple packages/modules to increase readability and performance.
+- Decorators should follow the same import and naming guidelines as functions.
+- Decorator pydoc should clearly state that the function is a decorator. Write unit tests for decorators.
+- ⚠️ Word of Caution: Avoid external dependencies in the decorator itself (e.g. don’t rely on files, sockets, database connections, etc.), since they might not be available when the decorator runs (at import time, perhaps from `pydoc` or other tools).
+- A decorator that is called with valid parameters should (as much as possible) be guaranteed to succeed in all cases.
+- ⚠️ Word of Caution: Never use `@staticmethod` unless forced to in order to integrate with an API defined in an existing library. Write a module level function instead.
+- ⚠️ Word of Caution: Use `@classmethod` only when writing a named constructor or a class-specific routine that modifies necessary global state such as a process-wide cache.
+
+
+### 2.16 Threading
+- *DO NOT* rely on the atomicity of built-in types.
+- Use `Queue` for dependencies on data and Threading.
+- For threading, use functional paradigm of programming to avoid State Overlap, Concurrency and Racing issues.
+
+
+### 2.17 Power Features
+- Try to *avoid* power features like custom metaclasses, access to bytecode, on-the-fly compilation, dynamic inheritance, object reparenting, import hacks, reflection (e.g. some uses of getattr()), modification of system internals, etc. It's harder to read, understand and debug code.
+- Use Standard Library Modules and Classes that internally use these features like, `abc.ABCMeta`, `collections.namedtuple`, `dataclasses`, and `enum`
+
+
+### 2.18 Type Annotated Code
+- Type annotations (or “type hints”) are for function or method arguments and return values:
+```python
+def func(a: int) -> List[int]:
+```
+- You can also declare the type of a variable using a special comment:
+```python
+a = SomeFunc()  # type: SomeType
+```
+- Though Type Annotations improve the readability and maintainability of the code, you will have to keep the type declarations up to date. You might see type errors that you think are valid code.
+- It is strongly advised to enable Python type analysis, (PEP-484)[https://www.python.org/dev/peps/pep-0484/], when updating the code. Tools like mypy and pytype can help.
+- Try to keep checks for important return functions. This will encourage the use of SOLID Design Principle.
 
 
 
