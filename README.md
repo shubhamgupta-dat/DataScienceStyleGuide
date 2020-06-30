@@ -35,6 +35,5 @@ We have tried to cover important topics such as:
 
 ## Coming Soon, Near You!
 
-- Python Usability Best Practices
 - Jupyter Notebook Best Practices
 - Library Development Best Practices
