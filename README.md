@@ -24,7 +24,7 @@ We have tried to cover important topics such as:
 
 #### 3. [Python Style Rules](content/python_style_rules/README.md)
 
-#### 4. Python Usability Best Practices
+#### 4. [Python Usability Best Practices](content/python_best_practices/README.md)
 
 #### 5. Jupyter Notebook Best Practices  
 
